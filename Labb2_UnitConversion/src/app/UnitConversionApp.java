@@ -24,6 +24,7 @@ public class UnitConversionApp {
 			temperatureConversionProgram();
 			break;
 		case 2 :
+			lengthConversionProgram();
 			break;
 		case 3 :
 			break;
@@ -125,6 +126,97 @@ public class UnitConversionApp {
 				chosenTempScale(from),
 				convertedValue,
 				chosenTempScale(to)
+				);
+	}
+	
+	public static void lengthConversionProgram(){
+		System.out.print("Vad vill du konvertera FRÅN? 1) meter, 2) fot/foot, 3) tum/inch : ");
+		
+		int from = scanner.nextInt();
+		
+		System.out.print("Vad vill du konvertera TILL? 1) meter, 2) fot/foot, 3) tum/inch : ");
+		int to = scanner.nextInt();
+		
+		
+		System.out.print("Ange värdet som ska konverteras (" + chosenLengthScale(from) + "): ");
+		value = scanner.nextDouble();
+		
+		// trivial conversion
+		if(from == to){
+			System.out.printf(Locale.US, "Temperaturen blir %.2f grader %s", value, chosenLengthScale(to));
+		}
+		
+		// 
+		int meter = 1;
+		int foot = 2;
+		int inch = 3;
+		
+		if(from == meter){
+			if(to == foot){
+				printLengthAnswer(value, from, meterToFoot(value), to);
+			} else if (to == inch){
+				printLengthAnswer(value, from, meterToInch(value), to);	
+			}
+		} else if(from == foot){
+			if(to == meter){
+				printLengthAnswer(value, from, footToMeter(value), to);
+			} else if(to == inch){
+				printLengthAnswer(value, from, footToInch(value), to);
+			}
+		} else if(from == inch){
+			if(to == meter){
+				printLengthAnswer(value, from, inchToMeter(value), to);
+			} else if(to == foot){
+				printLengthAnswer(value, from, inchToFoot(value), to);
+			}
+		}
+	}
+	
+	public static String chosenLengthScale(int optionValue){
+		switch(optionValue){
+		case 1:
+			return "meter";
+		case 2: 
+			return "fot/foot";
+		case 3: 
+			return "tum/inch";
+		default:
+			return "!!! något gick fel i val av längdenhet !!";
+		
+		}
+	}
+	
+	private static double meterToFoot(double value) {
+		return value * 3.28084;
+	}
+	
+	private static double meterToInch(double value) {
+		return value * 39.3701;
+	}
+	
+	private static double footToMeter(double value) {
+		return value * 0.3048;
+	}
+	
+	private static double footToInch(double value) {
+
+		return value * 12;
+	}
+	
+	private static double inchToMeter(double value) {
+		return value * 0.0254;
+	}
+	
+	private static double inchToFoot(double value) {
+		return value * 0.0833333;
+	}
+	
+	private static void printLengthAnswer(double origValue, int from, double convertedValue, int to){
+		System.out.printf(	Locale.US, "%.2f %s blir %.2f %s.",
+				origValue,
+				chosenLengthScale(from),
+				convertedValue,
+				chosenLengthScale(to)
 				);
 	}
 
