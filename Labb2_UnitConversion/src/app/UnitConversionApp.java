@@ -16,20 +16,22 @@ public class UnitConversionApp {
 
 		scanner = new Scanner(System.in);
 		
+		// "application loop" 
 		boolean keepGoing = true;
 		while(keepGoing){
-		
-		System.out.print("\nVilken sorts enheter vill du konvertera mellan? 1) Temperatur, 2) Längd, 3) Vikt: ");
-		// save this choice where is is easily accessed for all methods that could need it
-		chosenConversionProgram = scanner.nextInt();
-		// chooseConversionProgram(chosenConversionProgram);
-		
-		// run program
-		askForAndGetOptionValues();
-		
-		// after running once, ask if user wants to continue
-		System.out.print("\n\nVill du fortsätta med en ny konvertering? 1) Ja, 2) Nej : ");
-		keepGoing = scanner.nextInt() == 1 ? true : false;
+
+			System.out.print("Vilken sorts enheter vill du konvertera mellan? 1) Temperatur, 2) Längd, 3) Vikt: ");
+			
+			// save this choice where is is easily accessed for all methods that could need it
+			chosenConversionProgram = scanner.nextInt();
+			// chooseConversionProgram(chosenConversionProgram);
+
+			// run program
+			askForAndGetOptionValues();
+
+			// after running once, ask if user wants to continue
+			System.out.print("\nVill du fortsätta med en ny konvertering? 1) Ja, 2) Nej : ");
+			keepGoing = scanner.nextInt() == 1 ? true : false;
 		}
 		
 		// finish up
@@ -48,29 +50,32 @@ public class UnitConversionApp {
 	private static void askForAndGetOptionValues(){
 		String optionMessageFROM = "Vad vill du konvertera FRÅN? ";
 		String optionMessageTO = "Vad vill du konvertera TILL? ";
+		
+		// Add the right choices to the message
 		switch(chosenConversionProgram){
 		// temperature
 		case 1: 
-			optionMessageFROM += "1) celcius, 2) farenheit, 3) kelvin :";
-			optionMessageTO += "1) celcius, 2) farenheit, 3) kelvin :";
+			optionMessageFROM += "1) celcius, 2) farenheit, 3) kelvin : ";
+			optionMessageTO += "1) celcius, 2) farenheit, 3) kelvin : ";
 			break;
 		// length
 		case 2:
-			optionMessageFROM += "1) meter, 2) fot/foot, 3) tum/inch :";
-			optionMessageTO += "1) meter, 2) fot/foot, 3) tum/inch :";
+			optionMessageFROM += "1) meter, 2) fot/foot, 3) tum/inch : ";
+			optionMessageTO += "1) meter, 2) fot/foot, 3) tum/inch : ";
 			break;
+		// weight
 		case 3:
-			optionMessageFROM += "1) kg, 2) pound, 3) ounce :";
-			optionMessageTO += "1) kg, 2) pound, 3) ounce :";
+			optionMessageFROM += "1) kg, 2) pound, 3) ounce : ";
+			optionMessageTO += "1) kg, 2) pound, 3) ounce : ";
 			break;
 		}
 		
 		
 		// get the FROM option
-		System.out.println(optionMessageFROM);
+		System.out.print(optionMessageFROM);
 		int from = scanner.nextInt();
 		// get the TO option
-		System.out.println(optionMessageTO);
+		System.out.print(optionMessageTO);
 		int to = scanner.nextInt();
 		
 		// launch rest of program
@@ -99,9 +104,9 @@ public class UnitConversionApp {
 			}
 		}
 		
-		// named integers for code readability in if-statements
+		// named integers of option values, for code readability in if-statements
 		
-		// temperature
+		// temperature 
 		int celcius = 1;
 		int farenheit = 2;
 		int kelvin = 3;
@@ -116,10 +121,12 @@ public class UnitConversionApp {
 		int pound = 2;
 		int ounce = 3;
 		
-		// options
+		// conversion TYPE options
 		int temprature = 1;
 		int length = 2;
 		int weight = 3;
+		
+		// covering all non-trivial combinations of from / to 
 		
 		// from == 1
 		if(from == celcius || from == meter || from == kg){
@@ -141,7 +148,7 @@ public class UnitConversionApp {
 				// temperature c -> K
 				if(chosenConversionProgram == temprature)
 					printAnswer(value, from, celciusToKelvin(value), to);
-				// length  m -> foot
+				// length  m -> inch
 				else if(chosenConversionProgram == length)
 					printAnswer(value, from, meterToInch(value), to);
 				// weight  kg -> pound
@@ -213,7 +220,7 @@ public class UnitConversionApp {
 		
 		List<String> stringOptions = new ArrayList<String>();
 		
-		// populate list with different values, depending on what type of conversion user has chosen
+		// populate list with different values, depending on what type of conversion user has chosen (temperature/length/weight)
 		switch(chosenConversionProgram){
 		// temperature
 		case 1:
@@ -229,14 +236,14 @@ public class UnitConversionApp {
 			break;
 		}
 		
-		optionValue--; // so that choice 1 -> index 0
+		optionValue--; // so that choices starting on 1 matches list starting at 0
 		
 		return stringOptions.get(optionValue);
 	}
 	
 	private static void printAnswer(double origValue, int from, double convertedValue, int to){
 		System.out.printf(	Locale.US, 
-							"%.2f %s blir %.2f %s.",
+							"Ok: %.2f %s blir %.2f %s.\n",
 							origValue,
 							getChosenUnitAsString(from),
 							convertedValue,
@@ -328,9 +335,5 @@ public class UnitConversionApp {
 	private static double ounceToPound(double value){
 		return value * 0.0625;
 	}
-	
-	
-	
-	
-	
+		
 }
